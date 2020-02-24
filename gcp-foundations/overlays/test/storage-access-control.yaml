@@ -1,0 +1,10 @@
+apiVersion: storage.cnrm.cloud.google.com/v1beta1
+kind: StorageBucketAccessControl
+metadata:
+  labels:
+  name: BUCKET-NAME-PLACEHOLDER-accesscontrol
+spec:
+  bucketRef:
+    name: demo.ecc.BUCKET-NAME-PLACEHOLDER
+  entity: allUsers
+  role: READER

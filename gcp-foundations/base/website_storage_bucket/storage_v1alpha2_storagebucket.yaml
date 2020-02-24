@@ -1,0 +1,9 @@
+apiVersion: storage.cnrm.cloud.google.com/v1beta1
+kind: StorageBucket
+metadata:
+  labels:
+    env: "base"
+  name: BUCKET-NAME-PLACEHOLDER
+spec:
+  versioning:
+    enabled: true
