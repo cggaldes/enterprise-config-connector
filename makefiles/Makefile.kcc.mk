@@ -2,7 +2,6 @@
 kcc.download:
 	@gsutil cp gs://cnrm/latest/release-bundle.tar.gz gcp-identity/latest-install/release-bundle.tar.gz
 	@cd gcp-identity/latest-install && tar zxvf release-bundle.tar.gz
-	# @kubectl apply -f install-bundle-gcp-identity/
 
 # GCP Identity install
 kcc.deploy: ## Deploy Config Connector to cluster

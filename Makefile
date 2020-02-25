@@ -1,6 +1,6 @@
 # Variables
 CLUSTER_NAME?=ecc-on-kind
-PROJECT_ID?=<INSERT-PROJECT-ID>
+PROJECT_ID?=PROJECT-ID-PLACEHOLDER
 BUCKET_NAME_PLACEHOLDER?=BUCKET-NAME-PLACEHOLDER
 BUCKET_NAME?=christophergaldes.com
 CRD_NAME?=containerclusters.container.cnrm.cloud.google.com
@@ -8,6 +8,10 @@ CRD_NAME?=containerclusters.container.cnrm.cloud.google.com
 # Execution Variables
 KUBECTL_PATH?=kubectl
 ACTION?=apply
+
+# GCP Variables
+COMPUTE_ZONE?=australia-southeast1-a
+COMPUTE_REGION?=australia-southeast1
 
 help:
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
