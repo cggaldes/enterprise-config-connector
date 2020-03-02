@@ -5,10 +5,10 @@ kcc.download:
 
 # GCP Identity install
 kcc.deploy: ## Deploy Config Connector to cluster
-	@$(KUBECTL_PATH) $(ACTION) ns $(PROJECT_ID)
+	@$(KUBECTL_PATH) $(CREATE_ACTION) ns $(PROJECT_ID)
 	@$(KUBECTL_PATH) $(ACTION) -f gcp-identity/latest-install/install-bundle-gcp-identity/0-cnrm-system.yaml
 	@$(KUBECTL_PATH) $(ACTION) -f gcp-identity/latest-install/install-bundle-gcp-identity/crds.yaml
-	@$(KUBECTL_PATH) $(ACTION) secret generic gcp-key --from-file gcp-identity/key.json --namespace cnrm-system
+	@$(KUBECTL_PATH) $(CREATE_ACTION) secret generic gcp-key --from-file gcp-identity/key.json --namespace cnrm-system
 
 kcc.delete: ## Delete Config Connector to cluster
 	@$(KUBECTL_PATH) $(ACTION) -f gcp-identity/latest-install/install-bundle-gcp-identity/crds.yaml

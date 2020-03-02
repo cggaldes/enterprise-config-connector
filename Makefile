@@ -1,6 +1,6 @@
 # Variables
 CLUSTER_NAME?=ecc-on-kind
-PROJECT_ID?=PROJECT-ID-PLACEHOLDER
+PROJECT_ID?=chris-galdes-contino-project
 BUCKET_NAME_PLACEHOLDER?=BUCKET-NAME-PLACEHOLDER
 BUCKET_NAME?=christophergaldes.com
 CRD_NAME?=containerclusters.container.cnrm.cloud.google.com
@@ -8,6 +8,7 @@ CRD_NAME?=containerclusters.container.cnrm.cloud.google.com
 # Execution Variables
 KUBECTL_PATH?=kubectl
 ACTION?=apply
+CREATE_ACTION?=create
 
 # GCP Variables
 COMPUTE_ZONE?=australia-southeast1-a

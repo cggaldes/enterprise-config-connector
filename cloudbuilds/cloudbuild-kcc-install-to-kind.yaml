@@ -1,0 +1,69 @@
+steps:
+  - name: 'cggaldes/gcp-config-connector:docker'
+    entrypoint: /bin/sh
+    args: ['-c', 'kind create cluster --name=${_CLUSTER_NAME}']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - run
+      - --entrypoint=/bin/sh
+      - --net=host
+      - --volume=/var/run/docker.sock:/var/run/docker.sock
+      - --volume=/workspace:/workspace
+      - --volume=/tmp:/tmp
+      - --workdir=/workspace
+      - gcr.io/chris-galdes-contino-project/github.com/cggaldes/gcp-config-connector:docker
+      - -c
+      - | 
+          kind get kubeconfig --name=${_CLUSTER_NAME} > /tmp/${_CLUSTER_NAME}-config.yaml
+          export KUBECONFIG=/tmp/${_CLUSTER_NAME}-config.yaml
+          kubectl get nodes -o wide
+  - name: gcr.io/$PROJECT_ID/gcloud
+    entrypoint: /bin/sh
+    args: ['-c', 'make gcp.create_cnrm_sa_key']
+  - name: gcr.io/$PROJECT_ID/gsutil
+    entrypoint: /bin/sh
+    args: ['-c', 'make kcc.download']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - run
+      - --entrypoint=/bin/sh
+      - --net=host
+      - --volume=/var/run/docker.sock:/var/run/docker.sock
+      - --volume=/workspace:/workspace
+      - --volume=/tmp:/tmp
+      - --workdir=/workspace
+      - gcr.io/chris-galdes-contino-project/github.com/cggaldes/gcp-config-connector:docker
+      - -c
+      - | 
+          # export KUBECONFIG file
+          export KUBECONFIG=/tmp/${_CLUSTER_NAME}-config.yaml
+          # Deploy KCC GCP Identity to kind cluster
+          make kcc.deploy
+          # deploy SharedServices infrastructure
+          make app.deploy_demo2
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - run
+      - --entrypoint=/bin/sh
+      - --net=host
+      - --volume=/var/run/docker.sock:/var/run/docker.sock
+      - --volume=/workspace:/workspace
+      - --volume=/tmp:/tmp
+      - --workdir=/workspace
+      - gcr.io/chris-galdes-contino-project/github.com/cggaldes/gcp-config-connector:docker
+      - -c
+      - | 
+          # export KUBECONFIG file
+          export KUBECONFIG=/tmp/${_CLUSTER_NAME}-config.yaml
+          # display kcc logs
+          make kcc.show_logs
+  - name: 'ubuntu'
+    args: ['sleep', '300']
+  - name: 'cggaldes/gcp-config-connector:docker'
+    entrypoint: /bin/sh
+    args: ['-c', 'kind delete cluster --name=${_CLUSTER_NAME}']
+  - name: 'cggaldes/gcp-config-connector:docker'
+    entrypoint: /bin/sh
+    args: ['-c',  'rm /tmp/${_CLUSTER_NAME}-config.yaml']
+substitutions:
+    _CLUSTER_NAME: kind-cluster-demo2
