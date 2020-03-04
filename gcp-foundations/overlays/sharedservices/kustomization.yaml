@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namePrefix: sharedservices-
+bases:
+  - ../../base/network_one_tier/
+
+patchesStrategicMerge:
+  - patches/network.yaml
+  - patches/router_0.yaml
+  - patches/router_1.yaml
+  - patches/subnetwork_0.yaml
+  - patches/dns.yaml
+
+resources:
+  - resources/secret.yaml
+  - resources/gke.yaml
+  
+  

@@ -1,6 +1,6 @@
 substitutions:
     _CLUSTER_NAME: kind-cluster-demo2
-timeout: 1800s
+timeout: 2100s
 steps:
   - name: 'gcr.io/chris-galdes-contino-project/github.com/cggaldes/gcp-config-connector:docker'
     entrypoint: /bin/sh
@@ -107,6 +107,24 @@ steps:
     timeout: 500s
   - name: 'ubuntu'
     args: ['sleep', '500']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - run
+      - --entrypoint=/bin/sh
+      - --net=host
+      - --volume=/var/run/docker.sock:/var/run/docker.sock
+      - --volume=/workspace:/workspace
+      - --volume=/tmp:/tmp
+      - --workdir=/workspace
+      - gcr.io/chris-galdes-contino-project/github.com/cggaldes/gcp-config-connector:docker
+      - -c
+      - | 
+          # export KUBECONFIG file
+          export KUBECONFIG=/tmp/${_CLUSTER_NAME}-config.yaml
+          # delete infrastructure
+          ACTION=delete make app.demo2.deploy
+  - name: 'ubuntu'
+    args: ['sleep', '120']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - run

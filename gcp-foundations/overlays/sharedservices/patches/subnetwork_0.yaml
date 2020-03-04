@@ -1,0 +1,9 @@
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSubnetwork
+metadata:
+  labels:
+    env: "sharedservices"
+  name: subnetwork-0
+spec:
+  networkRef:
+    name: sharedservices-network

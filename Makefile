@@ -26,3 +26,12 @@ update_object_name_references:
 	@sed -i.3_bu s/$(BUCKET_NAME_PLACEHOLDER)/$(BUCKET_NAME)/ gcp-foundations/overlays/test/storage-access-control.yaml
 	@sed -i.4_bu s/$(BUCKET_NAME_PLACEHOLDER)/$(BUCKET_NAME)/ gcp-foundations/overlays/test/storage-default-object-access-control.yaml
 	@sed -i.5_bu s/$(BUCKET_NAME_PLACEHOLDER)/$(BUCKET_NAME)/ gcp-foundations/overlays/test/storage.yaml
+
+automation.demo2.create: kind.create_multi_node_cluster gcp.create_cnrm_sa_key kcc.ns_deploy kcc.deploy
+	@echo "Deployed Full Demo2 stack"
+
+automation.demo2.purge: gcp.delete_all_cnrm_sa_keys kind.delete_cluster
+	@echo "Cleanup Cluster"
+
+automation.demo2.testing: app.demo2.display_action
+	@echo "Env Test"

@@ -1,0 +1,16 @@
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouter
+metadata:
+  name: network-router-1
+spec:
+  networkRef:
+    name: network
+  description: network cloud router 1
+  region: australia-southeast1
+  bgp:
+    asn: 64515
+    advertiseMode: CUSTOM
+    advertisedGroups:
+      - ALL_SUBNETS
+    advertisedIpRanges:
+      - range: "1.2.3.4"

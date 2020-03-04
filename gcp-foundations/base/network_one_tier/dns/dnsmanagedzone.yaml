@@ -1,0 +1,15 @@
+apiVersion: dns.cnrm.cloud.google.com/v1beta1
+kind: DNSManagedZone
+metadata:
+  labels:
+    env: "base"
+    biller_code: "123---000"
+  name: ecc-christophergaldes-com
+spec:
+  description: "Managed DNS zone"
+  dnsName: "christophergaldes.com."
+  visibility: private
+  privateVisibilityConfig:
+    networks:
+      - networkRef:
+          name: network
