@@ -122,3 +122,16 @@ DNS -> c.storage.googleapis.com
 ## Summary
 
 Refer to https://medium.com/@cggaldes for more details
+
+
+## enterprise-config-connector - part 2
+An enhanced took at Google's Kubernetes Config Connector (KCC).
+
+## 2.1 Create git repo for project
+
+
+## 2.1.1 Link GitHub project to Cloud Build
+## 2.1.2 Create a cloud build trigger
+## 2.1.3 Define a cloudbuild.yaml file to define job
+## Build Overview
+## Summary
